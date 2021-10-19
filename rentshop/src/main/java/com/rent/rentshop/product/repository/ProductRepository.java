@@ -5,7 +5,14 @@ import com.rent.rentshop.product.dto.ProductRegisterForm;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    @Override
+    List<Product> findAll();
+
     Product save(ProductRegisterForm form);
+
 }
