@@ -15,21 +15,14 @@ public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
     @Override
-    public ProductRegisterForm register(ProductRegisterForm form) {
+    public ProductRegisterForm register(Product form) {
 
-        Product product = Product.builder()
-                .productName(form.getProductName())
-                .productDescription(form.getProductDescription())
-                .productPrice(form.getProductPrice())
-                .productImg(form.getProductImg())
-                .build();
-
-        Product registerProduct = productRepository.save(product);
-        return convertForm(registerProduct);
+        Product registerProduct = productRepository.save(form);
+        return responseConvertForm(registerProduct);
 
     }
 
-    protected ProductRegisterForm convertForm(Product product) {
+    protected ProductRegisterForm responseConvertForm(Product product) {
 
         return ProductRegisterForm.builder()
                 .productName(product.getProductName())

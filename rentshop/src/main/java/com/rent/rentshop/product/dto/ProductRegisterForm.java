@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 상품등록 전용 폼
+ */
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductRegisterForm {
 
     @NotEmpty(message = "상품 이름은 필수입니다.")
