@@ -34,4 +34,11 @@ public class Product extends BaseTimeEntity {
         this.productImg = productImg;
     }
 
+    public void updateProduct(String productName, String productDescription, int productPrice, String productImg) {
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productImg = productImg;
+    }
+
 }
