@@ -28,7 +28,7 @@ public interface ProductService {
      * @param form 상품 정보
      * @return 저장된 상품
      */
-    ProductRegisterForm register(Product form);
+    Product register(Product form);
 
     /**
      * 상품을 수정하여 저장소에 반영합니다.

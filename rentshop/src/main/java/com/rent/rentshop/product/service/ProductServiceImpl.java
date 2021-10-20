@@ -2,7 +2,6 @@ package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.error.ProductNotFoundException;
 import com.rent.rentshop.product.domain.Product;
-import com.rent.rentshop.product.dto.ProductRegisterForm;
 import com.rent.rentshop.product.dto.ProductUpdateForm;
 import com.rent.rentshop.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService{
 
@@ -24,10 +23,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductRegisterForm register(Product form) {
+    @Transactional
+    public Product register(Product form) {
 
         Product registerProduct = productRepository.save(form);
-        return responseConvertForm(registerProduct);
+        return registerProduct;
 
     }
 
@@ -40,6 +40,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional
     public void update(Long id, ProductUpdateForm form) {
 
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException());
@@ -53,20 +54,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         Product findProduct = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException());
         productRepository.delete(findProduct);
-    }
-
-    private ProductRegisterForm responseConvertForm(Product product) {
-
-        return ProductRegisterForm.builder()
-                .productName(product.getProductName())
-                .productPrice(product.getProductPrice())
-                .productDescription(product.getProductDescription())
-                .productImg(product.getProductImg())
-                .build();
-
     }
 
 }

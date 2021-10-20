@@ -77,7 +77,14 @@ public class ProductController {
                 .productImg(form.getProductImg())
                 .build();
 
-        ProductRegisterForm responseProduct = productService.register(product);
+        Product result = productService.register(product);
+
+        ProductRegisterForm responseProduct = ProductRegisterForm.builder()
+                .productName(result.getProductName())
+                .productPrice(result.getProductPrice())
+                .productDescription(result.getProductDescription())
+                .productImg(result.getProductImg())
+                .build();
 
         return new ResponseData(responseProduct);
     }
