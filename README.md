@@ -29,4 +29,5 @@
 
 * ERD
 
-![image](https://user-images.githubusercontent.com/50834204/138448555-89463f40-41c2-480c-a316-83925769b2b4.png)
+![image](https://user-images.githubusercontent.com/50834204/138483240-d11d2200-8b94-48e9-b1c4-8e9fccd58575.png)
+
