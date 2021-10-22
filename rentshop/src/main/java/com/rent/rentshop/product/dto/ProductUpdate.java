@@ -16,14 +16,17 @@ public class ProductUpdate {
     private String productName;
     @NotNull(message = "상품 가격은 필수입니다.")
     private int productPrice;
+    @NotNull(message = "보증금은 필수입니다.")
+    private int deposit;
 
     private String productDescription;
     private String productImg;
 
     @Builder
-    public ProductUpdate(String productName, int productPrice, String productDescription, String productImg) {
+    public ProductUpdate(String productName, int productPrice, int deposit, String productDescription, String productImg) {
         this.productName = productName;
         this.productPrice = productPrice;
+        this.deposit = deposit;
         this.productDescription = productDescription;
         this.productImg = productImg;
     }
