@@ -28,9 +28,9 @@ public class ProductController {
     @GetMapping
     public ResponseData getProducts() {
 
-        List<ProductSimpleResponseDto> products = productService.getProducts()
+        List<ProductSimpleResponse> products = productService.getProducts()
                 .stream()
-                .map(p -> new ProductSimpleResponseDto(
+                .map(p -> new ProductSimpleResponse(
                         p.getId(),
                         p.getProductName(),
                         p.getProductPrice()))
@@ -49,7 +49,7 @@ public class ProductController {
     public ResponseData getProduct(@PathVariable("id") Long id) {
 
         Product findProduct = productService.getProduct(id);
-        ProductResponseDto productResponseDto = ProductResponseDto.builder()
+        ProductResponse productResponseDto = ProductResponse.builder()
                 .productId(findProduct.getId())
                 .productName(findProduct.getProductName())
                 .productPrice(findProduct.getProductPrice())
@@ -68,7 +68,7 @@ public class ProductController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseData register(@RequestBody @Valid ProductRegisterForm form) {
+    public ResponseData register(@RequestBody @Valid ProductRequest form) {
 
         Product product = Product.builder()
                 .productName(form.getProductName())
@@ -79,7 +79,8 @@ public class ProductController {
 
         Product result = productService.register(product);
 
-        ProductRegisterForm responseProduct = ProductRegisterForm.builder()
+        ProductResponse responseProduct = ProductResponse.builder()
+                .productId(result.getId())
                 .productName(result.getProductName())
                 .productPrice(result.getProductPrice())
                 .productDescription(result.getProductDescription())
@@ -95,7 +96,7 @@ public class ProductController {
      * @param productUpdateForm 수정할 상품의 정보
      */
     @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT}, value = "/{id}")
-    public void update(@PathVariable("id") Long productId, @RequestBody @Valid ProductUpdateForm productUpdateForm) {
+    public void update(@PathVariable("id") Long productId, @RequestBody @Valid ProductUpdate productUpdateForm) {
 
         productService.update(productId,productUpdateForm);
 

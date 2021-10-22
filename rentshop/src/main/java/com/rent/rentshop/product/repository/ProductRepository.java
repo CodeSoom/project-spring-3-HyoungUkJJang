@@ -1,7 +1,7 @@
 package com.rent.rentshop.product.repository;
 
 import com.rent.rentshop.product.domain.Product;
-import com.rent.rentshop.product.dto.ProductRegisterForm;
+import com.rent.rentshop.product.dto.ProductRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Override
     List<Product> findAll();
 
-    Product save(ProductRegisterForm form);
+    Product save(ProductRequest form);
 
 }

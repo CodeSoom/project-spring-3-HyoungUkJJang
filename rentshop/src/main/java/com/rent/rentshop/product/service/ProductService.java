@@ -1,8 +1,7 @@
 package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.product.domain.Product;
-import com.rent.rentshop.product.dto.ProductRegisterForm;
-import com.rent.rentshop.product.dto.ProductUpdateForm;
+import com.rent.rentshop.product.dto.ProductUpdate;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public interface ProductService {
      * @param id 수정할 상품의 아이디
      * @param form 수정할 상품의 정보
      */
-    void update(Long id, ProductUpdateForm form);
+    void update(Long id, ProductUpdate form);
 
     /**
      * 상품을 삭제합니다.

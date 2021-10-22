@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductUpdateForm {
+public class ProductUpdate {
 
     @NotEmpty(message = "상품 이름은 필수입니다.")
     private String productName;
@@ -21,7 +21,7 @@ public class ProductUpdateForm {
     private String productImg;
 
     @Builder
-    public ProductUpdateForm(String productName, int productPrice, String productDescription, String productImg) {
+    public ProductUpdate(String productName, int productPrice, String productDescription, String productImg) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productDescription = productDescription;

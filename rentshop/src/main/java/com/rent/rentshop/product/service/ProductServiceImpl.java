@@ -2,7 +2,7 @@ package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.error.ProductNotFoundException;
 import com.rent.rentshop.product.domain.Product;
-import com.rent.rentshop.product.dto.ProductUpdateForm;
+import com.rent.rentshop.product.dto.ProductUpdate;
 import com.rent.rentshop.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public void update(Long id, ProductUpdateForm form) {
+    public void update(Long id, ProductUpdate form) {
 
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException());
 
