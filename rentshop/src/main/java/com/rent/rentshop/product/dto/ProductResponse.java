@@ -6,21 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 상품 리스트 조회 전용 DTO
+ * 상품 상세조회 전용 DTO
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductSimpleResponseDto {
+public class ProductResponse {
 
     private Long productId;
     private String productName;
     private int productPrice;
+    private String productDescription;
+    private String productImg;
 
     @Builder
-    public ProductSimpleResponseDto(Long productId, String productName, int productPrice) {
+    public ProductResponse(Long productId, String productName, int productPrice, String productDescription, String productImg) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
+        this.productDescription = productDescription;
+        this.productImg = productImg;
     }
 
 }

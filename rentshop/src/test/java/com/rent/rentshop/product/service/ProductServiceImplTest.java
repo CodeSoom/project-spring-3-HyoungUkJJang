@@ -2,7 +2,7 @@ package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.error.ProductNotFoundException;
 import com.rent.rentshop.product.domain.Product;
-import com.rent.rentshop.product.dto.ProductUpdateForm;
+import com.rent.rentshop.product.dto.ProductUpdate;
 import com.rent.rentshop.product.repository.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,7 +196,7 @@ class ProductServiceImplTest {
             @DisplayName("상품을 수정 후 수정한 상품을 리턴합니다.")
             void It_return_update_product() {
 
-                ProductUpdateForm updateForm = ProductUpdateForm.builder()
+                ProductUpdate updateForm = ProductUpdate.builder()
                         .productName("updateName1")
                         .productPrice(2000)
                         .productDescription("updateDescription1")
