@@ -24,20 +24,25 @@ public class Product extends BaseTime {
     private String productName;
     private String productDescription;
     private int productPrice;
+    private int deposit;
     private String productImg;
 
     @Builder
-    public Product(String productName, String productDescription, int productPrice, String productImg) {
+    public Product(Long id, String productName, String productDescription, int productPrice, int deposit, String productImg) {
+        this.id = id;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
+        this.deposit = deposit;
         this.productImg = productImg;
     }
 
-    public void updateProduct(String productName, String productDescription, int productPrice, String productImg) {
+
+    public void updateProduct(String productName, String productDescription, int productPrice, int deposit, String productImg) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
+        this.deposit = deposit;
         this.productImg = productImg;
     }
 

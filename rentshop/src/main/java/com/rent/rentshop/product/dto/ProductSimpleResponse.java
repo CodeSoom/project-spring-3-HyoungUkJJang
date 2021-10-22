@@ -15,12 +15,14 @@ public class ProductSimpleResponse {
     private Long productId;
     private String productName;
     private int productPrice;
+    private int deposit;
 
     @Builder
-    public ProductSimpleResponse(Long productId, String productName, int productPrice) {
+    public ProductSimpleResponse(Long productId, String productName, int productPrice, int deposit) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
+        this.deposit = deposit;
     }
 
 }

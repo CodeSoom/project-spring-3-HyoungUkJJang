@@ -49,6 +49,7 @@ public class ProductServiceImpl implements ProductService{
                 form.getProductName(),
                 form.getProductDescription(),
                 form.getProductPrice(),
+                form.getDeposit(),
                 form.getProductImg());
 
     }

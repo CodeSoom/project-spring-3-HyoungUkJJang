@@ -33,8 +33,9 @@ public class ProductController {
                 .map(p -> new ProductSimpleResponse(
                         p.getId(),
                         p.getProductName(),
-                        p.getProductPrice()))
-                .collect(Collectors.toList());
+                        p.getProductPrice(),
+                        p.getDeposit()))
+                        .collect(Collectors.toList());
 
         return new ResponseData(products);
 
@@ -53,6 +54,7 @@ public class ProductController {
                 .productId(findProduct.getId())
                 .productName(findProduct.getProductName())
                 .productPrice(findProduct.getProductPrice())
+                .deposit(findProduct.getDeposit())
                 .productDescription(findProduct.getProductDescription())
                 .productImg(findProduct.getProductImg())
                 .build();
@@ -74,6 +76,7 @@ public class ProductController {
                 .productName(form.getProductName())
                 .productDescription(form.getProductDescription())
                 .productPrice(form.getProductPrice())
+                .deposit(form.getDeposit())
                 .productImg(form.getProductImg())
                 .build();
 
@@ -83,6 +86,7 @@ public class ProductController {
                 .productId(result.getId())
                 .productName(result.getProductName())
                 .productPrice(result.getProductPrice())
+                .deposit(result.getDeposit())
                 .productDescription(result.getProductDescription())
                 .productImg(result.getProductImg())
                 .build();

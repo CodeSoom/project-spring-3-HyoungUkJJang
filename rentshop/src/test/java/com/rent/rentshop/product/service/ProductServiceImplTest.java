@@ -38,11 +38,12 @@ class ProductServiceImplTest {
             @BeforeEach
             void prepare() {
                 for (int i = 0; i < 5; i++) {
-                  Product product = Product.builder()
-                            .productName("name"+i)
-                            .productPrice(1000*i)
-                            .productDescription("description"+i)
-                            .productImg("img"+i)
+                    Product product = Product.builder()
+                            .productName("name" + i)
+                            .productPrice(1000 * i)
+                            .deposit(10000 * i)
+                            .productDescription("description" + i)
+                            .productImg("img" + i)
                             .build();
                     productService.register(product);
                 }
@@ -199,6 +200,7 @@ class ProductServiceImplTest {
                 ProductUpdate updateForm = ProductUpdate.builder()
                         .productName("updateName1")
                         .productPrice(2000)
+                        .deposit(25000)
                         .productDescription("updateDescription1")
                         .productImg("updateImg1")
                         .build();
@@ -257,6 +259,7 @@ class ProductServiceImplTest {
         return Product.builder()
                 .productName("name1")
                 .productPrice(1000)
+                .deposit(15000)
                 .productDescription("description")
                 .productImg("img1")
                 .build();
