@@ -23,7 +23,7 @@ public class ProductController {
 
     /**
      * 상품 전체를 조회하여 상품목록을 반환 후 200 상태코드를 반환합니다.
-     * @return 상품목록을 담고있는 응답용 DTO
+     * @return 상품리스트 응답 도메인
      */
     @GetMapping
     public ResponseData getProducts() {
@@ -34,8 +34,8 @@ public class ProductController {
                         p.getId(),
                         p.getProductName(),
                         p.getProductPrice(),
-                        p.getDeposit()))
-                        .collect(Collectors.toList());
+                        p.getDeposit())
+                ).collect(Collectors.toList());
 
         return new ResponseData(products);
 
@@ -44,7 +44,7 @@ public class ProductController {
     /**
      * 상품을 상세조회하여 상품 상세정보를 반환 후 200 상태코드를 반환합니다.
      * @param id 조회할 상품의 아이디
-     * @return 상품의 정보를 담고있는 응답용 DTO
+     * @return 상품 상세조회 응답 도메인
      */
     @GetMapping("/{id}")
     public ResponseData getProduct(@PathVariable("id") Long id) {

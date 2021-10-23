@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 상품수정 요청 도메인
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductUpdate {

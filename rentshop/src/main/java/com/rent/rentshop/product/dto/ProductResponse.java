@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 상품 상세조회 전용 DTO
+ * 상품 상세조회 응답 도메인
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
