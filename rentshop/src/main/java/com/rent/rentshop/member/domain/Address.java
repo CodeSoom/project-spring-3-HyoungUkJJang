@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
+/**
+ * 사용자의 주소 도메인
+ */
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

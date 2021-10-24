@@ -3,6 +3,7 @@ package com.rent.rentshop.member.service;
 import com.rent.rentshop.member.domain.Address;
 import com.rent.rentshop.member.domain.User;
 import com.rent.rentshop.member.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -52,6 +54,59 @@ class UserServiceImplTest {
 
         }
 
+    }
+
+    @Nested
+    @DisplayName("userIdCheck 메소드는")
+    class Describe_userIdCheck {
+
+        @Nested
+        @DisplayName("가입할 사용자의 아이디가 중복일 경우")
+        class Context_userId_duplicate {
+
+            String userId;
+
+            @BeforeEach
+            void prepare() {
+
+                User form = createUser();
+                User result = userService.join(form);
+                userId = result.getUserId();
+
+            }
+
+            @Test
+            @DisplayName("true를 리턴한다.")
+            void It_return_test() {
+
+                assertThat(userService.userIdCheck(userId)).isTrue();
+
+            }
+        }
+
+        @Nested
+        @DisplayName("가입할 사용자의 아이디가 중복일 아닐 경우")
+        class Context_userId_notDuplicate {
+
+            String userId;
+
+            @BeforeEach
+            void prepare() {
+
+                User form = createUser();
+                User result = userService.join(form);
+                userId = result.getUserId() + "VALID";
+
+            }
+
+            @Test
+            @DisplayName("true를 리턴한다.")
+            void It_return_test() {
+
+                assertThat(userService.userIdCheck(userId)).isFalse();
+
+            }
+        }
     }
 
     private User createUser() {
