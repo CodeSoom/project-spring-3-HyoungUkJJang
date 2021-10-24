@@ -1,16 +1,15 @@
 package com.rent.rentshop.member.dto;
 
-import com.rent.rentshop.member.domain.Address;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embedded;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * 회원가입 요청 도메인
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserRequest {
