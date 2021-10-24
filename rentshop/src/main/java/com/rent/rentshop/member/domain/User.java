@@ -45,4 +45,13 @@ public class User extends BaseTime {
         this.userAddress = userAddress;
     }
 
+    public void updateUser(String password, String userEmail, String userPhone, String roadAddress, String detailAddress) {
+
+        this.password = password;
+        this.userEmail = userEmail;
+        this.userPhone = userPhone;
+        this.userAddress = new Address(roadAddress, detailAddress);
+
+    }
+
 }
