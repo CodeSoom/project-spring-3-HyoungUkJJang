@@ -19,12 +19,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getUsers() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
-    public User getUser() {
-        return null;
+    public User getUser(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     @Override

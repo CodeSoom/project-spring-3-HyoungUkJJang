@@ -18,9 +18,10 @@ public interface UserService {
 
     /**
      * 사용자의 상세정보를 조회하여 리턴합니다.
+     * @param userId 조회할 사용자의 아이디
      * @return 조회된 사용자
      */
-    User getUser();
+    User getUser(String userId);
 
     /**
      * 사용자를 저장소에 저장후 리턴합니다.

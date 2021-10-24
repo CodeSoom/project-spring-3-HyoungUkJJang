@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +30,112 @@ class UserServiceImplTest {
     @BeforeEach
     void setUp() {
         userService = new UserServiceImpl(userRepository);
+    }
+
+    @Nested
+    @DisplayName("getUsers 메소드는")
+    class Describe_getUsers {
+
+        @Nested
+        @DisplayName("사용자를 전체 조회하고 싶을 경우에")
+        class Context_userList {
+
+            @BeforeEach
+            void prepare() {
+                for (int i = 0; i < 5; i++) {
+                    userService.join(
+                            User.builder()
+                                    .userId("id" + i)
+                                    .password("password" + i)
+                                    .userName("name" + i)
+                                    .userEmail("mail" + i)
+                                    .userPhone("phone" + i)
+                                    .userBirth("1990" + i)
+                                    .userAddress(new Address("111-111" + i, "address1" + i))
+                                    .build()
+                    );
+                }
+            }
+
+            @Test
+            @DisplayName("사용자 목록을 리턴한다.")
+            void It_return_userList() {
+                List<User> result = userService.getUsers();
+                assertThat(result).hasSize(5);
+            }
+
+        }
+
+        @Nested
+        @DisplayName("사용자가 한명도 경우에")
+        class Context_users_notFound {
+
+            @BeforeEach
+            void prepare() {
+                userRepository.findAll().clear();
+            }
+
+            @Test
+            @DisplayName("비어있는 리스트를 반환한다.")
+            void It_return_emptyList() {
+
+                assertThat(userService.getUsers()).isEmpty();
+
+            }
+
+        }
+
+    }
+
+    @Nested
+    @DisplayName("getUser 메소드는")
+    class Describe_getUser {
+
+        @Nested
+        @DisplayName("상세 조회할 사용자가 있을 경우에")
+        class Context_exist_user {
+
+            String userId;
+            User user;
+
+            @BeforeEach
+            void prepare() {
+                user = userService.join(createUser());
+                userId = user.getUserId();
+            }
+
+            @Test
+            @DisplayName("사용자 아이디를 이용하여 정보를 조회해 리턴합니다.")
+            void It_return_user() {
+                User result = userService.getUser(userId);
+                assertEquals(user.getId(),result.getId());
+            }
+
+        }
+
+        @Nested
+        @DisplayName("상세 조회할 사용자가 없을 경우에")
+        class Context_user_notFound {
+
+            String userId = "INVALID_ID";
+
+            @BeforeEach
+            void prepare() {
+                userRepository.findAll().clear();
+            }
+
+            @Test
+            @DisplayName("UserNotFoundException 예외를 던진다.")
+            void It_return_userNotFoundException() {
+
+                assertThatThrownBy(() -> userService.getUser(userId))
+                        .hasMessage("사용자를 찾을 수 없습니다.")
+                        .isInstanceOf(UserNotFoundException.class);
+
+            }
+
+        }
+
     }
 
     @Nested
