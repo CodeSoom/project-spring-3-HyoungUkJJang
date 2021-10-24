@@ -2,6 +2,7 @@ package com.rent.rentshop.member.service;
 
 import com.rent.rentshop.error.UserNotFoundException;
 import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.member.dto.UserUpdate;
 import com.rent.rentshop.member.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void userUpdate(String userId, UserUpdate form) {
+
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        user.updateUser(form.getPassword(), form.getUserEmail(),
+                form.getUserPhone(), form.getRoadAddress(), form.getDetailAddress());
+
+    }
+
+    @Override
     public void userDelete(Long id) {
 
         User result = userRepository.findById(id)
@@ -50,4 +62,5 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(result);
 
     }
+
 }

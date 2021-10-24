@@ -1,6 +1,8 @@
 package com.rent.rentshop.member.service;
 
 import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.member.dto.UserUpdate;
+
 import java.util.List;
 
 /**
@@ -40,6 +42,13 @@ public interface UserService {
      * @return true - 이메일 | false - 이메일 사용가능
      */
     boolean userEmailCheck(String userEmail);
+
+    /**
+     * 사용자의 정보를 수정합니다.
+     * @param userId 수정할 사용자의 아이디
+     * @param form 수정될 사용자의 정보
+     */
+    void userUpdate(String userId, UserUpdate form);
 
     /**
      * 사용자를 삭제합니다.

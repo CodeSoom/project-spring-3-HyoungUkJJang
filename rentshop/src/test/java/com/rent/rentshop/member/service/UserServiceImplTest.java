@@ -3,6 +3,7 @@ package com.rent.rentshop.member.service;
 import com.rent.rentshop.error.UserNotFoundException;
 import com.rent.rentshop.member.domain.Address;
 import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.member.dto.UserUpdate;
 import com.rent.rentshop.member.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -147,6 +148,47 @@ class UserServiceImplTest {
             @DisplayName("false를 리턴한다.")
             void It_return_test() {
                 assertThat(userService.userEmailCheck(userEmail)).isFalse();
+            }
+
+        }
+
+    }
+
+    @Nested
+    @DisplayName("userUpdate 메소드는")
+    class Describe_userUpdate {
+
+        @Nested
+        @DisplayName("수정할 사용자 정보가 있을 경우에")
+        class Context_exist_updateUser {
+
+            String userId;
+            User user;
+            UserUpdate updateForm;
+
+            @BeforeEach
+            void prepare() {
+
+                user = userService.join(createUser());
+                userId = user.getUserId();
+
+                updateForm = UserUpdate.builder()
+                        .password("update12345")
+                        .userEmail("update@mail")
+                        .userPhone("011")
+                        .roadAddress("999-999")
+                        .detailAddress("updateAddress")
+                        .build();
+
+            }
+
+            @Test
+            @DisplayName("사용자 요청 도메인을 받아 사용자 정보를 수정한다.")
+            void It_update_user() {
+
+                userService.userUpdate(userId, updateForm);
+                assertEquals(user.getPassword(), updateForm.getPassword());
+
             }
 
         }
