@@ -34,4 +34,11 @@ public interface UserService {
      */
     boolean userIdCheck(String userId);
 
+    /**
+     * 사용자 이메일이 중복인지 검증합니다.
+     * @param userEmail 검증할 이메일
+     * @return true - 이메일 | false - 이메일 사용가능
+     */
+    boolean userEmailCheck(String userEmail);
+
 }
