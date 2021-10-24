@@ -68,20 +68,17 @@ class UserServiceImplTest {
 
             @BeforeEach
             void prepare() {
-
                 User form = createUser();
                 User result = userService.join(form);
                 userId = result.getUserId();
-
             }
 
             @Test
             @DisplayName("true를 리턴한다.")
             void It_return_test() {
-
                 assertThat(userService.userIdCheck(userId)).isTrue();
-
             }
+
         }
 
         @Nested
@@ -92,21 +89,67 @@ class UserServiceImplTest {
 
             @BeforeEach
             void prepare() {
-
                 User form = createUser();
                 User result = userService.join(form);
                 userId = result.getUserId() + "VALID";
+            }
 
+            @Test
+            @DisplayName("false를 리턴한다.")
+            void It_return_test() {
+                assertThat(userService.userIdCheck(userId)).isFalse();
+            }
+
+        }
+
+    }
+
+    @Nested
+    @DisplayName("userEmailCheck 메소드는")
+    class Describe_userIdEmail {
+
+        @Nested
+        @DisplayName("가입할 사용자의 이메일이 중복일 경우")
+        class Context_userEmail_duplicate {
+
+            String userEmail;
+
+            @BeforeEach
+            void prepare() {
+                User form = createUser();
+                User result = userService.join(form);
+                userEmail = result.getUserEmail();
             }
 
             @Test
             @DisplayName("true를 리턴한다.")
             void It_return_test() {
-
-                assertThat(userService.userIdCheck(userId)).isFalse();
-
+                assertThat(userService.userEmailCheck(userEmail)).isTrue();
             }
+
         }
+
+        @Nested
+        @DisplayName("가입할 사용자의 아이디가 중복일 아닐 경우")
+        class Context_userEmail_notDuplicate {
+
+            String userEmail;
+
+            @BeforeEach
+            void prepare() {
+                User form = createUser();
+                User result = userService.join(form);
+                userEmail = result.getUserEmail() + "VALID";
+            }
+
+            @Test
+            @DisplayName("false를 리턴한다.")
+            void It_return_test() {
+                assertThat(userService.userEmailCheck(userEmail)).isFalse();
+            }
+
+        }
+
     }
 
     private User createUser() {
