@@ -41,4 +41,10 @@ public interface UserService {
      */
     boolean userEmailCheck(String userEmail);
 
+    /**
+     * 사용자를 삭제합니다.
+     * @param id 삭제할 사용자 아이디
+     */
+    void userDelete(Long id);
+
 }

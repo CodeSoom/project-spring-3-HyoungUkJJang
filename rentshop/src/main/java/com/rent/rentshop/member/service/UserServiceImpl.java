@@ -1,5 +1,6 @@
 package com.rent.rentshop.member.service;
 
+import com.rent.rentshop.error.UserNotFoundException;
 import com.rent.rentshop.member.domain.User;
 import com.rent.rentshop.member.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean userEmailCheck(String userEmail) {
         return userRepository.existsByUserEmail(userEmail);
+    }
+
+    @Override
+    public void userDelete(Long id) {
+
+        User result = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        userRepository.delete(result);
+
     }
 }

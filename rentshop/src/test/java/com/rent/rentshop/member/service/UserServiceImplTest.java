@@ -1,5 +1,6 @@
 package com.rent.rentshop.member.service;
 
+import com.rent.rentshop.error.UserNotFoundException;
 import com.rent.rentshop.member.domain.Address;
 import com.rent.rentshop.member.domain.User;
 import com.rent.rentshop.member.repository.UserRepository;
@@ -146,6 +147,57 @@ class UserServiceImplTest {
             @DisplayName("false를 리턴한다.")
             void It_return_test() {
                 assertThat(userService.userEmailCheck(userEmail)).isFalse();
+            }
+
+        }
+
+    }
+
+    @Nested
+    @DisplayName("userDelete 메소드는")
+    class Describe_userDelete {
+
+        @Nested
+        @DisplayName("삭제할 사용자가 있을 경우에")
+        class Context_exist_user {
+
+            Long userId;
+
+            @BeforeEach
+            void prepare() {
+                userRepository.findAll().clear();
+
+                User form = createUser();
+                User result = userService.join(form);
+                userId = result.getId();
+            }
+
+            @Test
+            @DisplayName("저장소에서 사용자를 삭제한다.")
+            void It_delete_user() {
+                userService.userDelete(userId);
+                assertThat(userRepository.findAll()).isEmpty();
+            }
+
+        }
+
+        @Nested
+        @DisplayName("삭제할 사용자를 찾지 못할 경우에")
+        class Context_user_notFound {
+
+            Long userId = 9999L;
+
+            @BeforeEach
+            void prepare() {
+                userRepository.findAll().clear();
+            }
+
+            @Test
+            @DisplayName("UserNotFoundException 예외를 던진다.")
+            void It_return_userNotFoundException() {
+                assertThatThrownBy(() -> userService.userDelete(userId))
+                        .hasMessage("사용자를 찾을 수 없습니다.")
+                        .isInstanceOf(UserNotFoundException.class);
             }
 
         }
