@@ -53,8 +53,8 @@ public interface UserService {
 
     /**
      * 사용자를 삭제합니다.
-     * @param id 삭제할 사용자 아이디
+     * @param userId 삭제할 사용자 아이디
      */
-    void userDelete(Long id);
+    void userDelete(String userId);
 
 }
