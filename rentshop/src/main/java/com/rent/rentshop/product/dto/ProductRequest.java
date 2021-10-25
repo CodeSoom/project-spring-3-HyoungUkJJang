@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
- * 상품등록 요청 도메인
+ * 상품등록 요청
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User join(User form) {
         return userRepository.save(form);
     }
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void userUpdate(String userId, UserUpdate form) {
 
         User user = userRepository.findByUserId(userId)
@@ -55,10 +57,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void userDelete(Long id) {
+    @Transactional
+    public void userDelete(String userId) {
 
-        User result = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException());
+        User result = userRepository.findByUserId(userId)
 
         userRepository.delete(result);
 

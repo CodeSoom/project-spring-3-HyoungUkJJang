@@ -311,7 +311,7 @@ class UserServiceImplTest {
         @DisplayName("삭제할 사용자가 있을 경우에")
         class Context_exist_user {
 
-            Long userId;
+            String userId;
 
             @BeforeEach
             void prepare() {
@@ -319,7 +319,9 @@ class UserServiceImplTest {
 
                 User form = createUser();
                 User result = userService.join(form);
-                userId = result.getId();
+
+                userId = result.getUserId();
+
             }
 
             @Test
@@ -335,7 +337,7 @@ class UserServiceImplTest {
         @DisplayName("삭제할 사용자를 찾지 못할 경우에")
         class Context_user_notFound {
 
-            Long userId = 9999L;
+            String userId = "INVALID";
 
             @BeforeEach
             void prepare() {

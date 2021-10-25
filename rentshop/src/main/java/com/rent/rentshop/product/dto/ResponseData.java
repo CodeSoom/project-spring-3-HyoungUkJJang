@@ -3,7 +3,7 @@ package com.rent.rentshop.product.dto;
 import lombok.Data;
 
 /**
- * 응답 전용 도메인
+ * 응답 전용
  * @param <T>
  */
 @Data
