@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService{
     public void userDelete(String userId) {
 
         User result = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UserNotFoundException());
 
         userRepository.delete(result);
 

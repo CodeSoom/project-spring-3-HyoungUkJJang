@@ -319,7 +319,9 @@ class UserServiceImplTest {
 
                 User form = createUser();
                 User result = userService.join(form);
+
                 userId = result.getUserId();
+
             }
 
             @Test
