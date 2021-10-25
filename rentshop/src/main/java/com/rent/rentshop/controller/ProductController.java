@@ -1,5 +1,6 @@
 package com.rent.rentshop.controller;
 
+import com.rent.rentshop.common.ResponseData;
 import com.rent.rentshop.product.domain.Product;
 import com.rent.rentshop.product.dto.*;
 import com.rent.rentshop.product.service.ProductService;

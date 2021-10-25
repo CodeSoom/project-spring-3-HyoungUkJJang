@@ -1,6 +1,6 @@
 package com.rent.rentshop.member.domain;
 
-import com.rent.rentshop.product.domain.BaseTime;
+import com.rent.rentshop.common.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

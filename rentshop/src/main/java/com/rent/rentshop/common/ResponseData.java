@@ -1,4 +1,4 @@
-package com.rent.rentshop.product.dto;
+package com.rent.rentshop.common;
 
 import lombok.Data;
 
