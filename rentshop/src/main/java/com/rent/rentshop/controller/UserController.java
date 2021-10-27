@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseData getUsers() {

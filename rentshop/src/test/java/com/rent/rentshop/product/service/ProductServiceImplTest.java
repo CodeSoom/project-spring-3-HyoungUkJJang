@@ -1,6 +1,9 @@
 package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.error.ProductNotFoundException;
+import com.rent.rentshop.member.domain.Address;
+import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.member.service.UserService;
 import com.rent.rentshop.product.domain.Product;
 import com.rent.rentshop.product.dto.ProductUpdate;
 import com.rent.rentshop.product.repository.ProductRepository;
@@ -15,14 +18,29 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class ProductServiceImplTest {
 
+    private static final String USER_ID = "userId1";
+
     private ProductService productService;
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
-        productService = new ProductServiceImpl(productRepository);
+        productService = new ProductServiceImpl(productRepository,userService);
+
+        userService.join(User.builder()
+                .userId("userId1")
+                .password("12345")
+                .userName("userName1")
+                .userEmail("userMail1")
+                .userPhone("010")
+                .userBirth("1996")
+                .userAddress(new Address("road", "detail"))
+                .build());
+
     }
 
     @Nested
@@ -45,7 +63,7 @@ class ProductServiceImplTest {
                             .productDescription("description" + i)
                             .productImg("img" + i)
                             .build();
-                    productService.register(product);
+                    productService.register(product,USER_ID);
                 }
                 productSize = productService.getProducts().size();
             }
@@ -101,7 +119,7 @@ class ProductServiceImplTest {
 
                 form = createProduct();
 
-                Product product = productService.register(form);
+                Product product = productService.register(form,USER_ID);
                 productId = product.getId();
 
             }
@@ -160,7 +178,7 @@ class ProductServiceImplTest {
             @Test
             @DisplayName("저장소에 상품을 저장 후 상품전용 DTO를 반환한다.")
             void It_save_return_product() {
-                Product result = productService.register(product);
+                Product result = productService.register(product, USER_ID);
                 assertEquals(result.getProductName(), product.getProductName());
             }
 
@@ -188,7 +206,7 @@ class ProductServiceImplTest {
 
                 Product form = createProduct();
 
-                Product product = productService.register(form);
+                Product product = productService.register(form, USER_ID);
                 productId = product.getId();
 
             }
@@ -237,7 +255,7 @@ class ProductServiceImplTest {
                 productService.getProducts().clear();
 
                 Product form = createProduct();
-                Product result = productService.register(form);
+                Product result = productService.register(form, USER_ID);
                 productId = result.getId();
 
             }

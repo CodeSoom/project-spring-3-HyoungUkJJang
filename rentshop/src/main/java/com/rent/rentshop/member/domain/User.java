@@ -1,6 +1,7 @@
 package com.rent.rentshop.member.domain;
 
 import com.rent.rentshop.common.BaseTime;
+import com.rent.rentshop.product.domain.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,17 +9,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 회원의 메인 도메인
  */
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class User extends BaseTime {
 
     @Id
@@ -34,6 +34,9 @@ public class User extends BaseTime {
 
     @Embedded
     private Address userAddress;
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> products = new ArrayList<>();
 
     @Builder
     public User(Long id, String userId, String password, String userName, String userEmail, String userPhone, String userBirth, Address userAddress) {

@@ -1,21 +1,17 @@
 package com.rent.rentshop.product.domain;
 
 import com.rent.rentshop.common.BaseTime;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.rent.rentshop.member.domain.User;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 상품의 메인 도메인
  */
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Product extends BaseTime {
 
     @Id
@@ -28,6 +24,10 @@ public class Product extends BaseTime {
     private int deposit;
     private String productImg;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
     public Product(Long id, String productName, String productDescription, int productPrice, int deposit, String productImg) {
         this.id = id;
@@ -38,13 +38,16 @@ public class Product extends BaseTime {
         this.productImg = productImg;
     }
 
-
     public void updateProduct(String productName, String productDescription, int productPrice, int deposit, String productImg) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.deposit = deposit;
         this.productImg = productImg;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
