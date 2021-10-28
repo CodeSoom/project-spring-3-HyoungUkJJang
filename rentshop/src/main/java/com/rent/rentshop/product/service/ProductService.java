@@ -25,9 +25,10 @@ public interface ProductService {
     /**
      * 상품을 저장소에 저장하고 저장한 상품을 리턴합니다.
      * @param form 상품 정보
+     * @param userId 상품을 등록하는 사용자 아이디
      * @return 저장된 상품
      */
-    Product register(Product form);
+    Product register(Product form, String userId);
 
     /**
      * 상품을 수정하여 저장소에 반영합니다.

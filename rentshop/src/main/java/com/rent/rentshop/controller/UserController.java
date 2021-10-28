@@ -7,16 +7,15 @@ import com.rent.rentshop.member.dto.UserResponse;
 import com.rent.rentshop.member.dto.UserSimpleResponse;
 import com.rent.rentshop.member.dto.UserUpdate;
 import com.rent.rentshop.member.service.UserService;
-import com.rent.rentshop.product.dto.ResponseData;
+import com.rent.rentshop.common.ResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.rent.rentshop.member.dto.UserSimpleResponse.*;
 
 @RestController
 @RequiredArgsConstructor

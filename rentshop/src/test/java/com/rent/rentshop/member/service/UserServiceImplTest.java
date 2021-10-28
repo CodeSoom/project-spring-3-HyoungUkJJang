@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ class UserServiceImplTest {
 
     @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     private UserService userService;
 
@@ -43,17 +45,16 @@ class UserServiceImplTest {
             @BeforeEach
             void prepare() {
                 for (int i = 0; i < 5; i++) {
-                    userService.join(
-                            User.builder()
-                                    .userId("id" + i)
-                                    .password("password" + i)
-                                    .userName("name" + i)
-                                    .userEmail("mail" + i)
-                                    .userPhone("phone" + i)
-                                    .userBirth("1990" + i)
-                                    .userAddress(new Address("111-111" + i, "address1" + i))
-                                    .build()
-                    );
+                    User userForm = User.builder()
+                            .userId("id" + i)
+                            .password("password"+1)
+                            .userName("name" + i)
+                            .userEmail("mail" + i)
+                            .userPhone("phone" + i)
+                            .userBirth("1990" + i)
+                            .userAddress(new Address("111-111" + i, "address1" + i))
+                            .build();
+                    userService.join(userForm);
                 }
             }
 
@@ -295,7 +296,7 @@ class UserServiceImplTest {
             void It_update_user() {
 
                 userService.userUpdate(userId, updateForm);
-                assertEquals(user.getPassword(), updateForm.getPassword());
+                assertEquals(user.getUserEmail(), updateForm.getUserEmail());
 
             }
 
@@ -357,7 +358,7 @@ class UserServiceImplTest {
     }
 
     private User createUser() {
-        return User.builder()
+        User user = User.builder()
                 .userId("id1")
                 .password("1234")
                 .userName("name1")
@@ -366,6 +367,7 @@ class UserServiceImplTest {
                 .userBirth("1996")
                 .userAddress(new Address("111-111", "address1"))
                 .build();
+        return user;
     }
 
 }

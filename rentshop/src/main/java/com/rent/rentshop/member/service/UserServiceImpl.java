@@ -5,6 +5,7 @@ import com.rent.rentshop.member.domain.User;
 import com.rent.rentshop.member.dto.UserUpdate;
 import com.rent.rentshop.member.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private  PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers() {
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public User join(User form) {
+        form.createPassword(form.getPassword(), passwordEncoder);
         return userRepository.save(form);
     }
 
@@ -51,8 +54,9 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException());
 
-        user.updateUser(form.getPassword(), form.getUserEmail(),
+        user.updateUser(form.getUserEmail(),
                 form.getUserPhone(), form.getRoadAddress(), form.getDetailAddress());
+        user.createPassword(form.getPassword(), passwordEncoder);
 
     }
 

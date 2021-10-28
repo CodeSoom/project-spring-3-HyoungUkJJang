@@ -1,6 +1,8 @@
 package com.rent.rentshop.product.service;
 
 import com.rent.rentshop.error.ProductNotFoundException;
+import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.member.service.UserService;
 import com.rent.rentshop.product.domain.Product;
 import com.rent.rentshop.product.dto.ProductUpdate;
 import com.rent.rentshop.product.repository.ProductRepository;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
+    private final UserService userService;
 
     @Override
     public List<Product> getProducts() {
@@ -24,9 +27,13 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public Product register(Product form) {
+    public Product register(Product form, String userId) {
+
+        User findUser = userService.getUser(userId);
+        form.setUser(findUser);
 
         Product registerProduct = productRepository.save(form);
+
         return registerProduct;
 
     }

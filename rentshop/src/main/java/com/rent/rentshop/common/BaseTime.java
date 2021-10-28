@@ -1,4 +1,4 @@
-package com.rent.rentshop.product.domain;
+package com.rent.rentshop.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
