@@ -35,9 +35,6 @@ public class User extends BaseTime {
     @Embedded
     private Address userAddress;
 
-    @OneToMany(mappedBy = "user")
-    private List<Product> products = new ArrayList<>();
-
     @Builder
     public User(Long id, String userId, String password, String userName, String userEmail, String userPhone, String userBirth, Address userAddress) {
         this.id = id;

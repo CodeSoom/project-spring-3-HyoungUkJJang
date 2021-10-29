@@ -1,6 +1,7 @@
 package com.rent.rentshop.rent.domain;
 
 import com.rent.rentshop.member.domain.User;
+import com.rent.rentshop.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,8 +17,12 @@ public class Rent {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private LocalDateTime rentalDate;
     private LocalDateTime returnDate;
@@ -25,7 +30,7 @@ public class Rent {
     @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
 
-    protected Rent() {};
+    Rent() {};
 
     @Builder
     public Rent(LocalDateTime rentalDate, LocalDateTime returnDate, RentStatus rentStatus) {
@@ -34,6 +39,12 @@ public class Rent {
         this.rentStatus = rentStatus;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
 }
