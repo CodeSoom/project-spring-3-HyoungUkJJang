@@ -21,10 +21,10 @@ public class LoginFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        super.doFilterInternal(request, response, chain);
 
         if (filterWithPathAndMethod(request)) {
             chain.doFilter(request, response);
+            return ;
         }
 
         String authorization = request.getHeader("Authentication");
@@ -37,8 +37,8 @@ public class LoginFilter extends BasicAuthenticationFilter {
         loginService.parseToken(accessToken);
 
         chain.doFilter(request, response);
-    }
 
+    }
 
     private boolean filterWithPathAndMethod(HttpServletRequest request) {
         if (request.getMethod().equals("GET") || request.getMethod().equals("POST")) {
