@@ -61,4 +61,11 @@ public class User extends BaseTime {
         return this;
     }
 
+    public boolean passwordCheck(String password,PasswordEncoder passwordEncoder) {
+
+        passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, this.password);
+
+    }
+
 }
