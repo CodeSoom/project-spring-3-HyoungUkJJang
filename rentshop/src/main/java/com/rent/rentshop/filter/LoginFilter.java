@@ -41,7 +41,7 @@ public class LoginFilter extends BasicAuthenticationFilter {
     }
 
     private boolean filterWithPathAndMethod(HttpServletRequest request) {
-        if (request.getMethod().equals("GET") || request.getMethod().equals("POST")) {
+        if (request.getMethod().equals("GET")) {
             return true;
         }
         if (request.getRequestURI().startsWith("/rent/user") || request.getRequestURI().startsWith("/rent/login")) {
