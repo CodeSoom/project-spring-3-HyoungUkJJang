@@ -1,5 +1,6 @@
 package com.rent.rentshop.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

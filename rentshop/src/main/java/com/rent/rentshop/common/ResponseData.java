@@ -1,5 +1,6 @@
 package com.rent.rentshop.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
