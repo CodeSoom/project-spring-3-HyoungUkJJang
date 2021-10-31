@@ -3,6 +3,7 @@ package com.rent.rentshop.config;
 import com.rent.rentshop.filter.LoginErrorFilter;
 import com.rent.rentshop.filter.LoginFilter;
 import com.rent.rentshop.member.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,10 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import javax.servlet.Filter;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
