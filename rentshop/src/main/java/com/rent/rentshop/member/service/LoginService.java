@@ -6,4 +6,6 @@ public interface LoginService {
 
     String login(LoginData loginData);
 
+    String parseToken(String accessToken);
+
 }

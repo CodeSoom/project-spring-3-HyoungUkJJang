@@ -1,12 +1,21 @@
 package com.rent.rentshop.config;
 
+import com.rent.rentshop.filter.LoginErrorFilter;
+import com.rent.rentshop.filter.LoginFilter;
+import com.rent.rentshop.member.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import javax.servlet.Filter;
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private LoginService loginService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -15,7 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+
+        Filter loginFilter = new LoginFilter(authenticationManager(), loginService);
+
+        Filter loginErrorFilter = new LoginErrorFilter();
+
+        http.csrf().disable()
+                .addFilter(loginFilter)
+                .addFilterBefore(loginErrorFilter, LoginFilter.class);
+
     }
 
 }

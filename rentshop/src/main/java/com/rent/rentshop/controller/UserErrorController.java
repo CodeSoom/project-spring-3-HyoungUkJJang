@@ -1,6 +1,7 @@
 package com.rent.rentshop.controller;
 
 import com.rent.rentshop.error.LoginFailException;
+import com.rent.rentshop.error.UnauthorizedException;
 import com.rent.rentshop.error.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,5 +36,15 @@ public class UserErrorController {
     public LoginFailException loginFailException() {
         return new LoginFailException();
     }
-    
+
+    /**
+     * 토큰을 찾을 수 없을 경우에 401 상태코드를 응답합니다.
+     * @return 토큰을 찾을 수 없다는 응답 메시지
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public UnauthorizedException unauthorizedException() {
+        return new UnauthorizedException();
+    }
+
 }
