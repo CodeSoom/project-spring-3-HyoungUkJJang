@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,6 +24,7 @@ public class RentServiceImpl implements RentService{
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public Rent createRent(String userId, Long productId, RentRequest rentRequest) {
 
         User findUser = userRepository.findByUserId(userId)
