@@ -1,5 +1,7 @@
 package com.rent.rentshop.rent.service;
 
+import com.rent.rentshop.error.ProductNotFoundException;
+import com.rent.rentshop.error.UserNotFoundException;
 import com.rent.rentshop.member.domain.Address;
 import com.rent.rentshop.member.domain.User;
 import com.rent.rentshop.member.repository.UserRepository;
@@ -13,6 +15,7 @@ import com.rent.rentshop.rent.domain.Rent;
 import com.rent.rentshop.rent.domain.RentStatus;
 import com.rent.rentshop.rent.dto.RentRequest;
 import com.rent.rentshop.rent.repository.RentRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +26,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -85,6 +89,70 @@ class RentServiceImplTest {
 
         }
 
+        @Nested
+        @DisplayName("대여할 물건을 찾을 수 없을 경우에")
+        class Context_not_exist_product {
+
+            String userId;
+            Long invalidProductId;
+            RentRequest rentRequest;
+
+            @BeforeEach
+            void prepare() {
+                userService.join(createUser());
+                User rentalUser = userService.join(createRentalUser());
+                userId = rentalUser.getUserId();
+
+                productRepository.findAll().clear();
+                invalidProductId = 9999L;
+
+                rentRequest = RentRequest.builder()
+                        .rentalDate(LocalDateTime.now())
+                        .returnDate(LocalDateTime.of(2021, 11, 5, 17, 0))
+                        .build();
+            }
+
+            @Test
+            @DisplayName("상품을 찾을 수 없다는 ProductNotFoundException 예외를 던진다.")
+            void It_return_productNotFoundException() {
+                assertThatThrownBy(() -> rentService.createRent(userId, invalidProductId, rentRequest))
+                        .isInstanceOf(ProductNotFoundException.class);
+            }
+
+
+        }
+
+        @Nested
+        @DisplayName("대여하는 사용자의 아이디를 찾을 수 없을 경우에")
+        class Context_not_exist_user {
+
+            String invalidUserId;
+            Long productId;
+            RentRequest rentRequest;
+
+            @BeforeEach
+            void prepare() {
+                User joinUser = userService.join(createUser());
+                User rentalUser = userService.join(createRentalUser());
+                invalidUserId = rentalUser.getUserId() + "Invalid";
+
+                Product registerProduct = productService.register(createProduct(), joinUser.getUserId());
+                productId = registerProduct.getId();
+
+                rentRequest = RentRequest.builder()
+                        .rentalDate(LocalDateTime.now())
+                        .returnDate(LocalDateTime.of(2021, 11, 5, 17, 0))
+                        .build();
+            }
+
+            @Test
+            @DisplayName("사용자를 찾을 수 없다는 UserNotFoundException 예외를 던진다.")
+            void It_return_userNotFoundException() {
+                assertThatThrownBy(() -> rentService.createRent(invalidUserId, productId, rentRequest))
+                        .isInstanceOf(UserNotFoundException.class);
+            }
+
+        }
     }
 
     private User createUser() {
