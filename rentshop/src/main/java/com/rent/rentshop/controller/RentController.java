@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/rent/rental")
@@ -32,6 +33,12 @@ public class RentController {
 
         return new ResponseData(result);
 
+    }
+
+    @GetMapping("/myrental/{userId}")
+    public List<Rent> getMyRental(@PathVariable("userId") String userId) {
+        List<Rent> myRent = rentService.findMyRent(userId);
+        return myRent;
     }
 
 }

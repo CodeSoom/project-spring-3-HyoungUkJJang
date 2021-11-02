@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,6 +45,15 @@ public class RentServiceImpl implements RentService{
 
         return rentRepository.save(rent);
 
+    }
+
+    @Override
+    public List<Rent> findMyRent(String userId) {
+
+        User findUser = userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException());
+
+        List<Rent> findMyRents = rentRepository.findAll();
+        return findMyRents;
     }
 
 }
