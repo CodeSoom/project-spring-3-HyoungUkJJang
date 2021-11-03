@@ -11,4 +11,6 @@ public interface RentService {
 
     List<Rent> findMyRent(String userId);
 
+    List<Rent> findRents();
+
 }
