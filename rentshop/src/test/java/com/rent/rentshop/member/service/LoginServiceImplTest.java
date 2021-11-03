@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginServiceImplTest {
 
     private final String SECRET_KEY = "1234567890123456789012345678901234567890";
-    private final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJ1c2VySWQxIn0.JuTXs4VuI0cmUIJRDTdKy5eZ4H4L4YBpcOUcO9wBK3o";
+    private final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyRW1haWwiOiJtYWlsQG1haWwifQ.de5psC-sjGt9QTqwmYdOVxD4kc05ISE4GIOlhAXzCO4";
     private final String INVALID_TOKEN = VALID_TOKEN+"INVALID";
 
     private LoginService loginService;
@@ -58,11 +58,11 @@ class LoginServiceImplTest {
                 User formUser = createUser();
 
                 loginDataTrue = LoginData.builder()
-                        .userId(formUser.getUserId())
+                        .userEmail(formUser.getUserEmail())
                         .password(formUser.getPassword())
                         .build();
                 loginDataFalse = LoginData.builder()
-                        .userId(formUser.getUserId())
+                        .userEmail(formUser.getUserEmail())
                         .password(formUser.getPassword()+"INVALID")
                         .build();
 
@@ -105,7 +105,7 @@ class LoginServiceImplTest {
 
                 User formUser = createUser();
                 loginData = LoginData.builder()
-                        .userId(formUser.getUserId())
+                        .userEmail(formUser.getUserEmail())
                         .password(formUser.getPassword())
                         .build();
                 accessToken = loginService.login(loginData);
@@ -139,10 +139,9 @@ class LoginServiceImplTest {
 
     private User createUser() {
         User user = User.builder()
-                .userId("userId1")
+                .userEmail("mail@mail")
                 .password("12345")
                 .userName("name1")
-                .userEmail("mail@mail")
                 .userPhone("010")
                 .userBirth("1996")
                 .userAddress(new Address("road", "detail"))

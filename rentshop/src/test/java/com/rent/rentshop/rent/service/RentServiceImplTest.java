@@ -48,7 +48,7 @@ class RentServiceImplTest {
     @BeforeEach
     void init() {
         userService = new UserServiceImpl(userRepository);
-        productService = new ProductServiceImpl(productRepository, userService);
+        productService = new ProductServiceImpl(productRepository, userRepository);
         rentService = new RentServiceImpl(rentRepository, productRepository, userRepository);
     }
 
@@ -60,7 +60,7 @@ class RentServiceImplTest {
         @DisplayName("대여할 물건이 있을 경우에")
         class Context_exist_rentalProduct {
 
-            String userId;
+            String userEmail;
             Long productId;
             RentRequest rentRequest;
 
@@ -69,8 +69,8 @@ class RentServiceImplTest {
 
                 User joinUser = userService.join(createUser());
                 User rentalUser = userService.join(createRentalUser());
-                userId = rentalUser.getUserId();
-                Product registerProduct = productService.register(createProduct(), joinUser.getUserId());
+                userEmail = rentalUser.getUserEmail();
+                Product registerProduct = productService.register(createProduct(), joinUser.getUserEmail());
                 productId = registerProduct.getId();
 
                 rentRequest = RentRequest.builder()
@@ -82,7 +82,7 @@ class RentServiceImplTest {
             @Test
             @DisplayName("대여 시작일, 대여 반납일을 입력받아 대여를 생성한다.")
             void It_save_createRant() {
-                Rent rent = rentService.createRent(userId, productId, rentRequest);
+                Rent rent = rentService.createRent(userEmail, productId, rentRequest);
                 assertEquals(rent.getReturnDate(),rentRequest.getReturnDate());
                 assertEquals(rent.getRentStatus(), RentStatus.WAIT);
             }
@@ -101,7 +101,7 @@ class RentServiceImplTest {
             void prepare() {
                 userService.join(createUser());
                 User rentalUser = userService.join(createRentalUser());
-                userId = rentalUser.getUserId();
+                userId = rentalUser.getUserEmail();
 
                 productRepository.findAll().clear();
                 invalidProductId = 9999L;
@@ -126,18 +126,18 @@ class RentServiceImplTest {
         @DisplayName("대여하는 사용자의 아이디를 찾을 수 없을 경우에")
         class Context_not_exist_user {
 
-            String invalidUserId;
-            Long productId;
+            String invalidUserEmail;
+            Long productIdEmail;
             RentRequest rentRequest;
 
             @BeforeEach
             void prepare() {
                 User joinUser = userService.join(createUser());
                 User rentalUser = userService.join(createRentalUser());
-                invalidUserId = rentalUser.getUserId() + "Invalid";
+                invalidUserEmail = rentalUser.getUserEmail() + "Invalid";
 
-                Product registerProduct = productService.register(createProduct(), joinUser.getUserId());
-                productId = registerProduct.getId();
+                Product registerProduct = productService.register(createProduct(), joinUser.getUserEmail());
+                productIdEmail = registerProduct.getId();
 
                 rentRequest = RentRequest.builder()
                         .rentalDate(LocalDateTime.now())
@@ -148,7 +148,7 @@ class RentServiceImplTest {
             @Test
             @DisplayName("사용자를 찾을 수 없다는 UserNotFoundException 예외를 던진다.")
             void It_return_userNotFoundException() {
-                assertThatThrownBy(() -> rentService.createRent(invalidUserId, productId, rentRequest))
+                assertThatThrownBy(() -> rentService.createRent(invalidUserEmail, productIdEmail, rentRequest))
                         .isInstanceOf(UserNotFoundException.class);
             }
 
@@ -157,10 +157,9 @@ class RentServiceImplTest {
 
     private User createUser() {
         User user = User.builder()
-                .userId("userId1")
+                .userEmail("mail@mail")
                 .password("12345")
                 .userName("name1")
-                .userEmail("mail@mail")
                 .userPhone("010")
                 .userBirth("1996")
                 .userAddress(new Address("road", "detail"))
@@ -170,10 +169,9 @@ class RentServiceImplTest {
 
     private User createRentalUser() {
         User user = User.builder()
-                .userId("rentalId")
+                .userEmail("rental@mail")
                 .password("12345")
                 .userName("rental")
-                .userEmail("rental@mail")
                 .userPhone("010")
                 .userBirth("1996")
                 .userAddress(new Address("road", "detail"))

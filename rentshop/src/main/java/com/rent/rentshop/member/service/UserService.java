@@ -39,15 +39,15 @@ public interface UserService {
 
     /**
      * 사용자의 정보를 수정합니다.
-     * @param userId 수정할 사용자의 아이디
+     * @param userEmail 수정할 사용자의 아이디
      * @param form 수정될 사용자의 정보
      */
-    void userUpdate(String userId, UserUpdate form);
+    void userUpdate(String userEmail, UserUpdate form);
 
     /**
      * 사용자를 삭제합니다.
-     * @param userId 삭제할 사용자 아이디
+     * @param userEmail 삭제할 사용자 아이디
      */
-    void userDelete(String userId);
+    void userDelete(String userEmail);
 
 }
