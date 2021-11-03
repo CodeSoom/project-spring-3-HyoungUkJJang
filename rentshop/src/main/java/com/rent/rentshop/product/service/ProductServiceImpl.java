@@ -27,9 +27,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public Product register(Product form, String userId) {
+    public Product register(Product form, String userEmail) {
 
-        User findUser = userService.getUser(userId);
+        User findUser = userService.getUser(userEmail);
         form.setUser(findUser);
 
         Product registerProduct = productRepository.save(form);

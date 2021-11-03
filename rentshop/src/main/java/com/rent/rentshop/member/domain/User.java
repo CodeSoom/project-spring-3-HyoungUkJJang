@@ -23,12 +23,12 @@ public class User extends BaseTime {
 
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
-    private String userId;
+    private String userEmail;
     private String password;
     private String userName;
-    private String userEmail;
     private String userPhone;
     private String userBirth;
 
@@ -36,12 +36,10 @@ public class User extends BaseTime {
     private Address userAddress;
 
     @Builder
-    public User(Long id, String userId, String password, String userName, String userEmail, String userPhone, String userBirth, Address userAddress) {
-        this.id = id;
-        this.userId = userId;
+    public User(String userEmail, String password, String userName, String userPhone, String userBirth, Address userAddress) {
+        this.userEmail = userEmail;
         this.password = password;
         this.userName = userName;
-        this.userEmail = userEmail;
         this.userPhone = userPhone;
         this.userBirth = userBirth;
         this.userAddress = userAddress;

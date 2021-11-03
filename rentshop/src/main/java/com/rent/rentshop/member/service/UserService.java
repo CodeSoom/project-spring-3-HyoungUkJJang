@@ -18,10 +18,10 @@ public interface UserService {
 
     /**
      * 사용자의 상세정보를 조회하여 리턴합니다.
-     * @param userId 조회할 사용자의 아이디
+     * @param userEmail 조회할 사용자의 아이디
      * @return 조회된 사용자
      */
-    User getUser(String userId);
+    User getUser(String userEmail);
 
     /**
      * 사용자를 저장소에 저장후 리턴합니다.
@@ -29,13 +29,6 @@ public interface UserService {
      * @return 저장된 사용자
      */
     User join(User form);
-
-    /**
-     * 사용자 아이디가 중복인지 검증합니다.
-     * @param userId 검증할 아이디
-     * @return true - 아이디중복 | false - 아이디 사용가능
-     */
-    boolean userIdCheck(String userId);
 
     /**
      * 사용자 이메일이 중복인지 검증합니다.

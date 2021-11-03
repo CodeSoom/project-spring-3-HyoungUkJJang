@@ -19,10 +19,10 @@ public class RentController {
     private final RentService rentService;
 
     @PostMapping
-    public ResponseData createRental(@RequestParam("userId") String userId, @RequestParam("productId") Long productId,
+    public ResponseData createRental(@RequestParam("userEmail") String userEmail, @RequestParam("productId") Long productId,
                                      @RequestBody @Valid RentRequest rentRequest) {
 
-        Rent rent = rentService.createRent(userId, productId, rentRequest);
+        Rent rent = rentService.createRent(userEmail, productId, rentRequest);
 
         RentResponse result = RentResponse.builder()
                 .rentId(rent.getId())
@@ -35,9 +35,9 @@ public class RentController {
 
     }
 
-    @GetMapping("/myrental/{userId}")
-    public List<Rent> getMyRental(@PathVariable("userId") String userId) {
-        List<Rent> myRent = rentService.findMyRent(userId);
+    @GetMapping("/myrental/{userEmail}")
+    public List<Rent> getMyRental(@PathVariable("userEmail") String userEmail) {
+        List<Rent> myRent = rentService.findMyRent(userEmail);
         return myRent;
     }
 

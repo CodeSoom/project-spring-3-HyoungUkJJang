@@ -27,9 +27,9 @@ public class RentServiceImpl implements RentService{
 
     @Override
     @Transactional
-    public Rent createRent(String userId, Long productId, RentRequest rentRequest) {
+    public Rent createRent(String userEmail, Long productId, RentRequest rentRequest) {
 
-        User findUser = userRepository.findByUserId(userId)
+        User findUser = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException());
 
         Product findProduct = productRepository.findById(productId)
@@ -48,9 +48,9 @@ public class RentServiceImpl implements RentService{
     }
 
     @Override
-    public List<Rent> findMyRent(String userId) {
+    public List<Rent> findMyRent(String userEmail) {
 
-        User findUser = userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException());
+        //User findUser = userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException());
 
         List<Rent> findMyRents = rentRepository.findAll();
         return findMyRents;
