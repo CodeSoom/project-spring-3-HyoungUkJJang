@@ -16,6 +16,7 @@ public class Product extends BaseTime {
 
     @Id
     @GeneratedValue
+    @Column(name = "product_id")
     private Long id;
 
     private String productName;

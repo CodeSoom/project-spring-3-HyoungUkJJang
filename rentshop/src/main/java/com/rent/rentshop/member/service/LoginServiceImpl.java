@@ -23,11 +23,11 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public String login(LoginData loginData) {
-        User findUser = userService.getUser(loginData.getUserId());
+        User findUser = userService.getUser(loginData.getUserEmail());
         if(!findUser.passwordCheck(loginData.getPassword(),passwordEncoder)) {
             throw new LoginFailException();
         }
-        return jwtUtil.createToken(findUser.getUserId());
+        return jwtUtil.createToken(findUser.getUserEmail());
     }
 
     @Override
@@ -39,8 +39,8 @@ public class LoginServiceImpl implements LoginService{
 
         try {
             Claims decode = jwtUtil.parseToken(accessToken);
-            String userId = decode.get("userId", String.class);
-            return userId;
+            String userEmail = decode.get("userEmail", String.class);
+            return userEmail;
         }catch (SignatureException e) {
             throw new UnauthorizedException();
         }

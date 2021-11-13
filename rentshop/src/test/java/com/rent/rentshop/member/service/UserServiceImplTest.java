@@ -46,10 +46,9 @@ class UserServiceImplTest {
             void prepare() {
                 for (int i = 0; i < 5; i++) {
                     User userForm = User.builder()
-                            .userId("id" + i)
+                            .userEmail("mail" + i)
                             .password("password"+1)
                             .userName("name" + i)
-                            .userEmail("mail" + i)
                             .userPhone("phone" + i)
                             .userBirth("1990" + i)
                             .userAddress(new Address("111-111" + i, "address1" + i))
@@ -96,19 +95,19 @@ class UserServiceImplTest {
         @DisplayName("상세 조회할 사용자가 있을 경우에")
         class Context_exist_user {
 
-            String userId;
+            String userEmail;
             User user;
 
             @BeforeEach
             void prepare() {
                 user = userService.join(createUser());
-                userId = user.getUserId();
+                userEmail = user.getUserEmail();
             }
 
             @Test
             @DisplayName("사용자 아이디를 이용하여 정보를 조회해 리턴합니다.")
             void It_return_user() {
-                User result = userService.getUser(userId);
+                User result = userService.getUser(userEmail);
                 assertEquals(user.getId(),result.getId());
             }
 
@@ -161,54 +160,6 @@ class UserServiceImplTest {
                 User result = userService.join(form);
                 assertEquals(form.getUserName(), result.getUserName());
 
-            }
-
-        }
-
-    }
-
-    @Nested
-    @DisplayName("userIdCheck 메소드는")
-    class Describe_userIdCheck {
-
-        @Nested
-        @DisplayName("가입할 사용자의 아이디가 중복일 경우")
-        class Context_userId_duplicate {
-
-            String userId;
-
-            @BeforeEach
-            void prepare() {
-                User form = createUser();
-                User result = userService.join(form);
-                userId = result.getUserId();
-            }
-
-            @Test
-            @DisplayName("true를 리턴한다.")
-            void It_return_test() {
-                assertThat(userService.userIdCheck(userId)).isTrue();
-            }
-
-        }
-
-        @Nested
-        @DisplayName("가입할 사용자의 아이디가 중복일 아닐 경우")
-        class Context_userId_notDuplicate {
-
-            String userId;
-
-            @BeforeEach
-            void prepare() {
-                User form = createUser();
-                User result = userService.join(form);
-                userId = result.getUserId() + "VALID";
-            }
-
-            @Test
-            @DisplayName("false를 리턴한다.")
-            void It_return_test() {
-                assertThat(userService.userIdCheck(userId)).isFalse();
             }
 
         }
@@ -271,7 +222,7 @@ class UserServiceImplTest {
         @DisplayName("수정할 사용자 정보가 있을 경우에")
         class Context_exist_updateUser {
 
-            String userId;
+            String userEmail;
             User user;
             UserUpdate updateForm;
 
@@ -279,7 +230,7 @@ class UserServiceImplTest {
             void prepare() {
 
                 user = userService.join(createUser());
-                userId = user.getUserId();
+                userEmail = user.getUserEmail();
 
                 updateForm = UserUpdate.builder()
                         .password("update12345")
@@ -295,7 +246,7 @@ class UserServiceImplTest {
             @DisplayName("사용자 요청 도메인을 받아 사용자 정보를 수정한다.")
             void It_update_user() {
 
-                userService.userUpdate(userId, updateForm);
+                userService.userUpdate(userEmail, updateForm);
                 assertEquals(user.getUserEmail(), updateForm.getUserEmail());
 
             }
@@ -312,7 +263,7 @@ class UserServiceImplTest {
         @DisplayName("삭제할 사용자가 있을 경우에")
         class Context_exist_user {
 
-            String userId;
+            String userEmail;
 
             @BeforeEach
             void prepare() {
@@ -321,14 +272,14 @@ class UserServiceImplTest {
                 User form = createUser();
                 User result = userService.join(form);
 
-                userId = result.getUserId();
+                userEmail = result.getUserEmail();
 
             }
 
             @Test
             @DisplayName("저장소에서 사용자를 삭제한다.")
             void It_delete_user() {
-                userService.userDelete(userId);
+                userService.userDelete(userEmail);
                 assertThat(userRepository.findAll()).isEmpty();
             }
 
@@ -359,10 +310,9 @@ class UserServiceImplTest {
 
     private User createUser() {
         User user = User.builder()
-                .userId("id1")
+                .userEmail("mail1")
                 .password("1234")
                 .userName("name1")
-                .userEmail("mail1")
                 .userPhone("010")
                 .userBirth("1996")
                 .userAddress(new Address("111-111", "address1"))

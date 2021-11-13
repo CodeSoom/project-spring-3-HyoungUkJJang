@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserSimpleResponse {
 
-    private String userId;
+    private String userEmail;
     private String userName;
 
     @Builder
-    public UserSimpleResponse(String userId, String userName) {
-        this.userId = userId;
+    public UserSimpleResponse(String userEmail, String userName) {
+        this.userEmail = userEmail;
         this.userName = userName;
     }
 

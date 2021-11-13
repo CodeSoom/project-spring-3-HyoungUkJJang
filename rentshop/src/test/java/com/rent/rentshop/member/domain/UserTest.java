@@ -16,9 +16,8 @@ class UserTest {
     @BeforeEach
     void prepare() {
         user = User.builder()
-                .userId("userId1")
-                .userName("name1")
                 .userEmail("mail@mail")
+                .userName("name1")
                 .userPhone("010")
                 .userBirth("1996")
                 .userAddress(new Address("road", "detail"))
@@ -30,13 +29,13 @@ class UserTest {
     public void 사용자생성() throws Exception {
 
         //GIVEN
-        String expectedUserId = "userId1";
+        String expectedUserEmail = "mail@mail";
 
         //WHEN
-        String actualUserId = user.getUserId();
+        String actualUserEmail = user.getUserEmail();
 
         //THEN
-        assertEquals(expectedUserId,actualUserId);
+        assertEquals(expectedUserEmail,actualUserEmail);
 
     }
 

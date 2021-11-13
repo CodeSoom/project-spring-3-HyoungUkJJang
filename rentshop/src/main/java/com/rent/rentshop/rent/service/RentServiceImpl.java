@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -25,9 +27,9 @@ public class RentServiceImpl implements RentService{
 
     @Override
     @Transactional
-    public Rent createRent(String userId, Long productId, RentRequest rentRequest) {
+    public Rent createRent(String userEmail, Long productId, RentRequest rentRequest) {
 
-        User findUser = userRepository.findByUserId(userId)
+        User findUser = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException());
 
         Product findProduct = productRepository.findById(productId)
@@ -45,4 +47,17 @@ public class RentServiceImpl implements RentService{
 
     }
 
+    @Override
+    public List<Rent> findMyRent(String userEmail) {
+
+        User findUser = userRepository.findByUserEmail(userEmail).orElseThrow(() -> new UserNotFoundException());
+
+        List<Rent> findMyRents = rentRepository.getMyRentList(findUser.getId());
+        return findMyRents;
+    }
+
+    @Override
+    public List<Rent> findRents() {
+        return rentRepository.findAll();
+    }
 }

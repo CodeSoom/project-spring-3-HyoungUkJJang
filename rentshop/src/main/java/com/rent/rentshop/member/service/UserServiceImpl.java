@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUser(String userId) {
-        return userRepository.findByUserId(userId)
+    public User getUser(String userEmail) {
+        return userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException());
     }
 
@@ -38,20 +38,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean userIdCheck(String userId) {
-        return userRepository.existsByUserId(userId);
-    }
-
-    @Override
     public boolean userEmailCheck(String userEmail) {
         return userRepository.existsByUserEmail(userEmail);
     }
 
     @Override
     @Transactional
-    public void userUpdate(String userId, UserUpdate form) {
+    public void userUpdate(String userEmail, UserUpdate form) {
 
-        User user = userRepository.findByUserId(userId)
+        User user = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException());
 
         user.updateUser(form.getUserEmail(),
@@ -62,9 +57,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void userDelete(String userId) {
+    public void userDelete(String userEmail) {
 
-        User result = userRepository.findByUserId(userId)
+        User result = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException());
 
         userRepository.delete(result);

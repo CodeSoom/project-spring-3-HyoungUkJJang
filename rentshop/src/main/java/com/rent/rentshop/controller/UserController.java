@@ -29,22 +29,21 @@ public class UserController {
         List<UserSimpleResponse> result = userService.getUsers()
                 .stream()
                 .map(u -> new UserSimpleResponse(
-                        u.getUserId(),
+                        u.getUserEmail(),
                         u.getUserName()))
                 .collect(Collectors.toList());
 
         return new ResponseData(result);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseData getUser(@PathVariable("userId") String userId) {
+    @GetMapping("/{userEmail}")
+    public ResponseData getUser(@PathVariable("userEmail") String userEmail) {
 
-        User findUser = userService.getUser(userId);
+        User findUser = userService.getUser(userEmail);
 
         UserResponse result = UserResponse.builder()
-                .userId(findUser.getUserId())
-                .userName(findUser.getUserName())
                 .userEmail(findUser.getUserEmail())
+                .userName(findUser.getUserName())
                 .userPhone(findUser.getUserPhone())
                 .userBirth(findUser.getUserBirth())
                 .roadAddress(findUser.getUserAddress().getRoadAddress())
@@ -60,10 +59,9 @@ public class UserController {
     public ResponseData register(@RequestBody @Valid UserRequest form) {
 
         User userForm = User.builder()
-                .userId(form.getUserId())
+                .userEmail(form.getUserEmail())
                 .password(form.getPassword())
                 .userName(form.getUserName())
-                .userEmail(form.getUserEmail())
                 .userPhone(form.getUserPhone())
                 .userBirth(form.getUserBirth())
                 .userAddress(new Address(form.getRoadAddress(), form.getDetailAddress()))
@@ -72,9 +70,8 @@ public class UserController {
         User joinUser = userService.join(userForm);
 
         UserResponse result = UserResponse.builder()
-                .userId(joinUser.getUserId())
-                .userName(joinUser.getUserName())
                 .userEmail(joinUser.getUserEmail())
+                .userName(joinUser.getUserName())
                 .userPhone(joinUser.getUserPhone())
                 .userBirth(joinUser.getUserBirth())
                 .roadAddress(joinUser.getUserAddress().getRoadAddress())

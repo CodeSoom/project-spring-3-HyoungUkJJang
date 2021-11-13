@@ -71,7 +71,7 @@ public class ProductController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseData register(@RequestBody @Valid ProductRequest form, @RequestHeader(name = "userId")String userId) {
+    public ResponseData register(@RequestBody @Valid ProductRequest form, @RequestHeader(name = "userEmail")String userEmail) {
 
         Product product = Product.builder()
                 .productName(form.getProductName())
@@ -81,7 +81,7 @@ public class ProductController {
                 .productImg(form.getProductImg())
                 .build();
 
-        Product result = productService.register(product,userId);
+        Product result = productService.register(product,userEmail);
 
         ProductResponse responseProduct = ProductResponse.builder()
                 .productId(result.getId())
